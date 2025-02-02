@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vampyrian\LithuanianPhone;
+namespace Vampyrian\LithuanianPhone\Exceptions;
 
 use Exception;
 
