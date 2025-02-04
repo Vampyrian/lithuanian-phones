@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vampyrian\LithuanianPhone\Tests;
 
-use Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Vampyrian\LithuanianPhone\Enums\NumberFormatType;
