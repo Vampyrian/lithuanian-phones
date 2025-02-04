@@ -54,7 +54,7 @@ You can use `format()` with a `NumberFormatType` enum value:
 ```php
 $number = LithuanianPhone::parse('+370 672 17266');
 $number->format(NumberFormatType::INTERNATIONAL); // +37067217266
-$number->format(PhoneNumberFormat::LOCAL); // 067217266
+$number->format(NumberFormatType::LOCAL); // 067217266
 ```
 
 ### Number types
