@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Vampyrian\LithuanianPhone\Enums\NumberFormatType;
 use Vampyrian\LithuanianPhone\Enums\Operator;
+use Vampyrian\LithuanianPhone\Enums\OperatorType;
 use Vampyrian\LithuanianPhone\Exceptions\LithuanianPhoneException;
 use Vampyrian\LithuanianPhone\Exceptions\LithuanianPhoneLengthException;
 use Vampyrian\LithuanianPhone\Exceptions\LithuanianPhoneOperatorNotFoundException;
@@ -22,25 +23,27 @@ class LithuanianPhoneTest extends TestCase
      * @throws LithuanianPhoneOperatorNotFoundException
      */
     #[DataProvider('validNumberProvider')]
-    public function testValidNumber(string $number, Operator $operator): void
+    public function testValidNumber(string $number, Operator $operator, OperatorType $operatorType): void
     {
         $lithuaniaPhone = LithuanianPhone::parse($number);
         $parsedOperator = $lithuaniaPhone->getOperator();
+        $parsedOperatorType = $parsedOperator->getType();
 
-        $this->assertSame($parsedOperator, $operator);
+        $this->assertSame($operator, $parsedOperator);
+        $this->assertSame($operatorType, $parsedOperatorType);
     }
 
     public static function validNumberProvider(): array
     {
         return [
-            'Kelmė' => ['+370 427 00000', Operator::KELME],
-            'Kelmė local' => ['(0 427) 00 000', Operator::KELME],
-            'Palanga' => ['(8 46) 00 00 00', Operator::PALANGA],
-            'Klaipėda' => ['(8 46) 10 00 00', Operator::KLAIPEDA],
-            'Vilnius' => ['(+370) 5 000 0000', Operator::VILNIUS],
-            'Mobile' => ['8672 00000', Operator::TELE2],
-            'Mobile with local' => ['0672 00000', Operator::TELE2],
-            'Mobile international' => ['+370 672 00000', Operator::TELE2],
+            'Kelmė' => ['+370 427 00000', Operator::KELME, OperatorType::FIXED],
+            'Kelmė local' => ['(0 427) 00 000', Operator::KELME, OperatorType::FIXED],
+            'Palanga' => [' (0 460) 48 995', Operator::PALANGA, OperatorType::FIXED],
+            'Klaipėda' => [' (8 46) 41 99 40', Operator::KLAIPEDA, OperatorType::FIXED],
+            'Vilnius' => ['(+370) 5 000 0000', Operator::VILNIUS, OperatorType::FIXED],
+            'Mobile' => ['8672 00000', Operator::TELE2, OperatorType::MOBILE],
+            'Mobile with local' => ['0672 00000', Operator::TELE2, OperatorType::MOBILE],
+            'Mobile international' => ['+370 672 00000', Operator::TELE2, OperatorType::MOBILE],
         ];
     }
 
